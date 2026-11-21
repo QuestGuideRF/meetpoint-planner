@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetPoint Planner - Организация совместных поездок</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-map-marked-alt"></i> Планировщик MeetPoint</h1>
+                <p>Организация совместных поездок</p>
+            </div>
+            <div class="global-destination">
+                <h3><i class="fas fa-flag-checkered"></i> Конечная точка поездки</h3>
+                <div class="form-group">
+                    <label for="globalDestination">Куда едем</label>
+                    <div class="input-with-icon">
+                        <input type="text" id="globalDestination" placeholder="Введите адрес">
+                        <button type="button" class="map-picker-btn" data-target="globalDestination" title="Выбрать на карте">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="participant-form">
+                <h3><i class="fas fa-user-plus"></i> Добавить участника</h3>
+                <form id="participantForm">
+                    <div class="form-group">
+                        <label for="participantName">Имя участника</label>
+                        <input type="text" id="participantName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startPoint">Стартовая точка</label>
+                        <div class="input-with-icon">
+                            <input type="text" id="startPoint" placeholder="Введите адрес" required>
+                            <button type="button" class="map-picker-btn" data-target="startPoint" title="Выбрать на карте">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hasCar">
+                            <span class="checkmark square"></span>
+                            Есть машина
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Добавить участника
+                    </button>
+                </form>
+            </div>
+            <div class="participants-list">
+                <h3><i class="fas fa-users"></i> Участники</h3>
+                <div id="participantsList"></div>
+            </div>
+            <div class="meeting-points">
+                <h3><i class="fas fa-handshake"></i> Точки встречи</h3>
+                <div class="meeting-point-form">
+                    <div class="form-group">
+                        <label>Выберите участников для встречи:</label>
+                        <div id="participantsCheckboxes"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Местоположение точки встречи:</label>
+                        <div class="input-with-icon">
+                            <input type="text" id="meetingPointLocation" placeholder="Введите адрес">
+                            <button type="button" class="map-picker-btn" data-target="meetingPointLocation" title="Выбрать на карте">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button id="createMeetingPoint" class="btn btn-secondary">
+                        <i class="fas fa-plus"></i> Создать точку встречи
+                    </button>
+                </div>
+                <div id="meetingPointsList"></div>
+            </div>
+            <div class="save-section">
+                <button id="saveData" class="btn btn-success">
+                    <i class="fas fa-save"></i> Сохранить данные
+                </button>
+                <button id="loadData" class="btn btn-outline">
+                    <i class="fas fa-folder-open"></i> Загрузить данные
+                </button>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button id="clearMap" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Очистить карту
+                    </button>
+                    <button id="optimizeRoutes" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> Оптимизировать маршруты
+                    </button>
+                </div>
+            </div>
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span>Участников: <span id="participantsCount">0</span></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-handshake"></i>
+                    <span>Точек встречи: <span id="meetingPointsCount">0</span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
